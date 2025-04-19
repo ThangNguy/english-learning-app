@@ -1,0 +1,115 @@
+<div class="dashboard-container">
+  <header class="dashboard-header">
+    <h1>Bảng điều khiển học tập</h1>
+    <div class="streak-counter" *ngIf="progress">
+      <span class="streak-number">{{ progress.streakDays }}</span>
+      <span class="streak-label">ngày học liên tiếp</span>
+    </div>
+  </header>
+
+  <section class="progress-overview">
+    <div class="progress-card">
+      <h3>Tiến độ tổng quan</h3>
+      <div class="progress-bar-container">
+        <div class="progress-bar" [style.width.%]="completionPercentage"></div>
+        <span class="progress-label">{{ completionPercentage | number:'1.0-0' }}%</span>
+      </div>
+      <div class="progress-details" *ngIf="progress">
+        <div class="detail-item">
+          <span class="detail-label">Bài học đã hoàn thành:</span>
+          <span class="detail-value">{{ progress.completedLessons }}/{{ progress.totalLessons }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Hoạt động đã hoàn thành:</span>
+          <span class="detail-value">{{ progress.completedActivities }}/{{ progress.totalActivities }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Ngày bắt đầu:</span>
+          <span class="detail-value">{{ formatDate(progress.lastCompletedDate) }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="progress-card">
+      <h3>Từ vựng và mẫu câu</h3>
+      <div class="progress-bar-container">
+        <div class="progress-bar vocabulary-bar" [style.width.%]="vocabularyPercentage"></div>
+        <span class="progress-label">{{ vocabularyPercentage | number:'1.0-0' }}%</span>
+      </div>
+      <div class="progress-details">
+        <div class="detail-item">
+          <span class="detail-label">Từ vựng đã học:</span>
+          <span class="detail-value">{{ learnedVocabularyCount }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Mẫu câu đã học:</span>
+          <span class="detail-value">{{ learnedPhrasesCount }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Tổng số:</span>
+          <span class="detail-value">{{ getTotalWordsLearned() }}/500+</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="weekly-overview">
+    <h2>Lộ trình học tập 30 ngày</h2>
+    
+    <div class="week-cards">
+      <div class="week-card" *ngFor="let week of weekPlans">
+        <div class="week-header">
+          <h3>{{ week.title }}</h3>
+          <p>{{ week.description }}</p>
+        </div>
+        
+        <div class="lesson-list">
+          <div class="lesson-item" *ngFor="let lesson of week.lessons">
+            <div class="lesson-info">
+              <h4>{{ lesson.title }}</h4>
+              <p>{{ lesson.description }}</p>
+            </div>
+            <div class="lesson-status" [class.completed]="lesson.completed">
+              {{ lesson.completed ? 'Đã hoàn thành' : 'Chưa học' }}
+            </div>
+            <a [routerLink]="['/lessons/week-' + week.id, 'lesson', lesson.id]" class="lesson-link">
+              Học ngay
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="resources-section">
+    <h2>Tài liệu học tập</h2>
+    <div class="resources">
+      <div class="resource-item">
+        <h3>Ứng dụng học tiếng Anh</h3>
+        <ul>
+          <li><a href="https://elsaspeak.com/" target="_blank">ELSA Speak</a></li>
+          <li><a href="https://www.bbc.co.uk/learningenglish/" target="_blank">BBC Learning English</a></li>
+          <li><a href="https://www.duolingo.com/course/en/vi/học-tiếng-Anh" target="_blank">Duolingo Business</a></li>
+        </ul>
+      </div>
+      
+      <div class="resource-item">
+        <h3>Sách học tiếng Anh</h3>
+        <ul>
+          <li>English for Business Communication</li>
+          <li>Everyday Business English</li>
+          <li>Business Vocabulary in Use</li>
+        </ul>
+      </div>
+      
+      <div class="resource-item">
+        <h3>YouTube Channels</h3>
+        <ul>
+          <li><a href="https://www.youtube.com/c/englishwithmrduncan" target="_blank">Speak English with Mr. Duncan</a></li>
+          <li><a href="https://www.youtube.com/c/businessenglishpod" target="_blank">Business English Pod</a></li>
+          <li><a href="https://www.youtube.com/c/bbclearningenglish" target="_blank">BBC Learning English</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>

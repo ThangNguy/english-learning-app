@@ -1,0 +1,155 @@
+<div class="vocabulary-container">
+  <header class="vocabulary-header">
+    <h1>Từ vựng và mẫu câu tiếng Anh công sở</h1>
+    <p>Tổng hợp các từ vựng và mẫu câu thông dụng trong môi trường làm việc</p>
+  </header>
+
+  <div class="search-bar">
+    <input 
+      type="text" 
+      [(ngModel)]="searchTerm" 
+      placeholder="Tìm kiếm từ vựng hoặc mẫu câu..." 
+      class="search-input"
+    />
+  </div>
+
+  <div class="tabs">
+    <button 
+      class="tab-button" 
+      [class.active]="activeTab === 'vocabulary'" 
+      (click)="setActiveTab('vocabulary')"
+    >
+      Từ vựng
+    </button>
+    <button 
+      class="tab-button" 
+      [class.active]="activeTab === 'phrases'" 
+      (click)="setActiveTab('phrases')"
+    >
+      Mẫu câu
+    </button>
+  </div>
+
+  <div class="category-filter" *ngIf="activeTab === 'vocabulary' && vocabularyCategories.length > 0">
+    <span class="filter-label">Lọc theo danh mục:</span>
+    <div class="category-buttons">
+      <button 
+        class="category-button" 
+        [class.active]="selectedCategory === 'all'" 
+        (click)="setCategory('all')"
+      >
+        Tất cả
+      </button>
+      <button 
+        *ngFor="let category of vocabularyCategories" 
+        class="category-button" 
+        [class.active]="selectedCategory === category" 
+        (click)="setCategory(category)"
+      >
+        {{ category | titlecase }}
+      </button>
+    </div>
+  </div>
+
+  <div class="category-filter" *ngIf="activeTab === 'phrases' && phraseCategories.length > 0">
+    <span class="filter-label">Lọc theo danh mục:</span>
+    <div class="category-buttons">
+      <button 
+        class="category-button" 
+        [class.active]="selectedCategory === 'all'" 
+        (click)="setCategory('all')"
+      >
+        Tất cả
+      </button>
+      <button 
+        *ngFor="let category of phraseCategories" 
+        class="category-button" 
+        [class.active]="selectedCategory === category" 
+        (click)="setCategory(category)"
+      >
+        {{ category | titlecase }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Tab từ vựng -->
+  <div class="vocabulary-list" *ngIf="activeTab === 'vocabulary'">
+    <div class="vocabulary-item" *ngFor="let item of vocabulary" [class.learned]="item.learned">
+      <div class="vocabulary-header">
+        <h3 class="word">{{ item.word }}</h3>
+        <div class="vocabulary-actions">
+          <button 
+            class="learn-button" 
+            (click)="toggleVocabularyLearned(item.id)"
+          >
+            {{ item.learned ? 'Đã học' : 'Đánh dấu đã học' }}
+          </button>
+        </div>
+      </div>
+      
+      <div class="vocabulary-details">
+        <div class="meaning">
+          <span class="label">Nghĩa:</span>
+          <span class="value">{{ item.meaning }}</span>
+        </div>
+        
+        <div class="pronunciation" *ngIf="item.pronunciation">
+          <span class="label">Phát âm:</span>
+          <span class="value">{{ item.pronunciation }}</span>
+        </div>
+        
+        <div class="example">
+          <span class="label">Ví dụ:</span>
+          <span class="value">{{ item.example }}</span>
+        </div>
+        
+        <div class="category">
+          <span class="label">Danh mục:</span>
+          <span class="value">{{ item.category | titlecase }}</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="no-items" *ngIf="vocabulary.length === 0">
+      <p>Không tìm thấy từ vựng nào phù hợp với tìm kiếm của bạn.</p>
+    </div>
+  </div>
+
+  <!-- Tab mẫu câu -->
+  <div class="phrase-list" *ngIf="activeTab === 'phrases'">
+    <div class="phrase-item" *ngFor="let item of phrases" [class.learned]="item.learned">
+      <div class="phrase-header">
+        <h3 class="phrase">{{ item.phrase }}</h3>
+        <div class="phrase-actions">
+          <button 
+            class="learn-button" 
+            (click)="togglePhraseLearned(item.id)"
+          >
+            {{ item.learned ? 'Đã học' : 'Đánh dấu đã học' }}
+          </button>
+        </div>
+      </div>
+      
+      <div class="phrase-details">
+        <div class="meaning">
+          <span class="label">Nghĩa:</span>
+          <span class="value">{{ item.meaning }}</span>
+        </div>
+        
+        <div class="usage">
+          <span class="label">Cách dùng:</span>
+          <span class="value">{{ item.usage }}</span>
+        </div>
+        
+        <div class="category">
+          <span class="label">Danh mục:</span>
+          <span class="value">{{ item.category | titlecase }}</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="no-items" *ngIf="phrases.length === 0">
+      <p>Không tìm thấy mẫu câu nào phù hợp với tìm kiếm của bạn.</p>
+    </div>
+  </div>
+</div>

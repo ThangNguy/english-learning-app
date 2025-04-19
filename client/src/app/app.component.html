@@ -1,0 +1,43 @@
+<div class="app-container">
+  <header class="main-header">
+    <div class="header-content">
+      <div class="logo">
+        <a routerLink="/">{{ title }}</a>
+      </div>
+      <nav class="main-nav">
+        <ul>
+          <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Trang chủ</a></li>
+          <li><a routerLink="/lessons" routerLinkActive="active">Bài học</a></li>
+          <li><a routerLink="/lessons/vocabulary" routerLinkActive="active">Từ vựng</a></li>
+          <li><a routerLink="/about" routerLinkActive="active">Giới thiệu</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="main-footer">
+    <div class="footer-content">
+      <div class="footer-info">
+        <h3>{{ title }}</h3>
+        <p>Ứng dụng học tiếng Anh công sở trong 30 ngày</p>
+      </div>
+      <div class="footer-links">
+        <h4>Liên kết hữu ích</h4>
+        <ul>
+          <li><a href="https://elsaspeak.com/" target="_blank">ELSA Speak</a></li>
+          <li><a href="https://www.bbc.co.uk/learningenglish/" target="_blank">BBC Learning English</a></li>
+          <li><a href="https://www.youtube.com/c/englishwithmrduncan" target="_blank">Speak English with Mr. Duncan</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h4>Liên hệ</h4>
+        <p>Email: support&#64;business-english.app</p>
+        <p>© {{ currentYear }} Business English App. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</div>

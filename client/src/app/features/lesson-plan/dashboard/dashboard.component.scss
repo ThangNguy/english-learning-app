@@ -1,0 +1,275 @@
+@use '../../../../styles/variables' as *;
+
+.dashboard-container {
+  max-width: $container-max-width;
+  margin: 0 auto;
+  padding: $spacing-xl;
+  font-family: $font-family-base;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-xl;
+  
+  h1 {
+    color: $text-color-primary;
+    font-size: $font-size-xlarge;
+    margin: 0;
+  }
+  
+  .streak-counter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: $primary-color;
+    color: white;
+    padding: $spacing-md $spacing-lg;
+    border-radius: $border-radius-md;
+    
+    .streak-number {
+      font-size: $font-size-large;
+      font-weight: bold;
+    }
+    
+    .streak-label {
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.progress-overview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: $spacing-lg;
+  margin-bottom: $spacing-xl;
+  
+  .progress-card {
+    background-color: $background-white;
+    border-radius: $border-radius-md;
+    box-shadow: $shadow-md;
+    padding: $spacing-lg;
+    
+    h3 {
+      color: $text-color-primary;
+      margin-top: 0;
+      margin-bottom: $spacing-md;
+      font-size: $font-size-medium;
+    }
+    
+    .progress-bar-container {
+      height: 24px;
+      background-color: #f0f0f0;
+      border-radius: $border-radius-lg;
+      margin-bottom: $spacing-md;
+      position: relative;
+      overflow: hidden;
+      
+      .progress-bar {
+        height: 100%;
+        background-color: $primary-color;
+        border-radius: $border-radius-lg;
+        transition: width 0.3s ease;
+      }
+      
+      .vocabulary-bar {
+        background-color: $secondary-color;
+      }
+      
+      .progress-label {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-weight: 500;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+      }
+    }
+    
+    .progress-details {
+      .detail-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: $spacing-sm;
+        
+        .detail-label {
+          color: $text-color-secondary;
+        }
+        
+        .detail-value {
+          font-weight: 500;
+          color: $text-color-primary;
+        }
+      }
+    }
+  }
+}
+
+.weekly-overview {
+  margin-bottom: $spacing-xl;
+  
+  h2 {
+    color: $text-color-primary;
+    font-size: $font-size-large;
+    margin-bottom: $spacing-lg;
+  }
+  
+  .week-cards {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+    
+    .week-card {
+      background-color: $background-white;
+      border-radius: $border-radius-md;
+      box-shadow: $shadow-md;
+      overflow: hidden;
+      
+      .week-header {
+        background-color: $primary-color;
+        color: white;
+        padding: $spacing-lg;
+        
+        h3 {
+          margin-top: 0;
+          margin-bottom: $spacing-xs;
+          font-size: $font-size-medium;
+        }
+        
+        p {
+          margin: 0;
+          opacity: 0.9;
+        }
+      }
+      
+      .lesson-list {
+        padding: $spacing-lg;
+        
+        .lesson-item {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          padding: $spacing-md 0;
+          border-bottom: 1px solid #f0f0f0;
+          
+          &:last-child {
+            border-bottom: none;
+          }
+          
+          .lesson-info {
+            flex: 2;
+            min-width: 250px;
+            
+            h4 {
+              margin: 0 0 $spacing-xs 0;
+              color: $text-color-primary;
+            }
+            
+            p {
+              margin: 0;
+              color: $text-color-secondary;
+              font-size: 0.9rem;
+            }
+          }
+          
+          .lesson-status {
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            color: #e74c3c;
+            font-weight: 500;
+            
+            &.completed {
+              color: #2ecc71;
+            }
+          }
+          
+          .lesson-link {
+            flex: 0 0 auto;
+            background-color: $primary-color;
+            color: white;
+            padding: $spacing-sm $spacing-md;
+            border-radius: $border-radius-lg;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            
+            &:hover {
+              background-color: $primary-color-dark;
+              transform: translateY(-2px);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.resources-section {
+  h2 {
+    color: $text-color-primary;
+    font-size: $font-size-large;
+    margin-bottom: $spacing-lg;
+  }
+  
+  .resources {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: $spacing-lg;
+    
+    .resource-item {
+      background-color: $background-white;
+      border-radius: $border-radius-md;
+      box-shadow: $shadow-md;
+      padding: $spacing-lg;
+      
+      h3 {
+        color: $primary-color;
+        margin-top: 0;
+        margin-bottom: $spacing-md;
+        font-size: $font-size-small;
+      }
+      
+      ul {
+        padding-left: $spacing-lg;
+        margin: 0;
+        
+        li {
+          margin-bottom: $spacing-sm;
+          
+          a {
+            color: $primary-color;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            
+            &:hover {
+              color: $primary-color-dark;
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive styles
+@media (max-width: $breakpoint-md) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacing-md;
+  }
+  
+  .lesson-item {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: $spacing-sm;
+    
+    .lesson-info, .lesson-status {
+      width: 100%;
+      text-align: left !important;
+    }
+  }
+}

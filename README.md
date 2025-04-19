@@ -1,59 +1,88 @@
-# EnglishLearningApp
+# English Learning Project
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.4.
+## Overview
+The English Learning project is a web application designed to help users learn English through various interactive components. The project is structured into two main parts: a client-side application built with Angular and a server-side API developed in C# using ASP.NET Core. The application also utilizes SQL Server for data storage.
 
-## Development server
+## Project Structure
+The project is organized as follows:
 
-To start a local development server, run:
-
-```bash
-ng serve
+```
+english-learning
+├── client                  # Angular client application
+│   ├── src
+│   │   ├── app
+│   │   │   ├── components  # Reusable components
+│   │   │   │   └── shared
+│   │   │   ├── models      # TypeScript models
+│   │   │   ├── services    # Business logic and data retrieval
+│   │   │   ├── pages       # Application pages
+│   │   │   │   ├── home
+│   │   │   │   ├── vocabulary
+│   │   │   │   ├── grammar
+│   │   │   │   └── exercises
+│   │   │   ├── app.module.ts
+│   │   │   ├── app-routing.module.ts
+│   │   │   ├── app.component.ts
+│   │   │   └── app.component.html
+│   │   ├── assets          # Static assets
+│   │   ├── environments     # Environment configurations
+│   │   ├── index.html      # Main HTML file
+│   │   └── styles.scss     # Global styles
+│   ├── angular.json        # Angular CLI configuration
+│   ├── package.json        # Project dependencies and scripts
+│   ├── tsconfig.json       # TypeScript configuration
+│   └── README.md           # Client-side documentation
+├── server                  # C# server application
+│   ├── EnglishLearning.API
+│   │   ├── Controllers     # API controllers
+│   │   ├── Models          # Data models
+│   │   ├── Services        # Business logic services
+│   │   ├── Data           # Data access layer
+│   │   ├── Program.cs      # Entry point of the API
+│   │   ├── Startup.cs      # Application configuration
+│   │   └── appsettings.json # API configuration settings
+│   ├── EnglishLearning.Core # Core business logic
+│   ├── EnglishLearning.Infrastructure # Data access implementation
+│   ├── EnglishLearning.sln  # Solution file
+│   └── README.md           # Server-side documentation
+├── database                # Database setup
+│   ├── scripts             # SQL scripts
+│   └── README.md           # Database documentation
+└── README.md               # Overall project documentation
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Features
+- **Vocabulary Learning**: Interactive components for learning new words and their meanings.
+- **Grammar Exercises**: Tools and exercises to improve grammar skills.
+- **Practice Exercises**: Various exercises to test and reinforce learning.
+- **User-Friendly Interface**: A responsive and intuitive UI built with Angular.
 
-## Code scaffolding
+## Getting Started
+To get started with the project, follow these steps:
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+1. **Clone the Repository**: 
+   ```
+   git clone <repository-url>
+   ```
 
-```bash
-ng generate component component-name
-```
+2. **Set Up the Database**: 
+   - Navigate to the `database/scripts` directory and run the SQL scripts to initialize and seed the database.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+3. **Run the Server**: 
+   - Navigate to the `server` directory and run the API using your preferred method (e.g., using Visual Studio or the command line).
 
-```bash
-ng generate --help
-```
+4. **Run the Client**: 
+   - Navigate to the `client` directory and install the dependencies:
+     ```
+     npm install
+     ```
+   - Start the Angular application:
+     ```
+     ng serve
+     ```
 
-## Building
+## Contributing
+Contributions are welcome! Please submit a pull request or open an issue for any suggestions or improvements.
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## License
+This project is licensed under the MIT License. See the LICENSE file for more details.

@@ -1,0 +1,440 @@
+@use '../../../../styles/variables' as *;
+@use 'sass:color';
+
+.week-container {
+  max-width: $container-max-width;
+  margin: 0 auto;
+  padding: $spacing-xl;
+  font-family: $font-family-base;
+}
+
+.week-header {
+  margin-bottom: $spacing-xl;
+  
+  h1 {
+    color: $text-color-primary;
+    font-size: $font-size-xlarge;
+    margin-bottom: $spacing-xs;
+  }
+  
+  .week-description {
+    color: $text-color-secondary;
+    font-size: $font-size-base;
+    line-height: 1.5;
+  }
+}
+
+.lesson-navigation {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  margin-bottom: $spacing-xl;
+  
+  .lesson-nav-item {
+    display: flex;
+    align-items: center;
+    padding: $spacing-md;
+    background-color: $background-white;
+    border-radius: $border-radius-md;
+    box-shadow: $shadow-sm;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: $shadow-md;
+    }
+    
+    &.active {
+      background-color: $primary-color;
+      
+      h3, p {
+        color: white;
+      }
+      
+      .lesson-number {
+        background-color: white;
+        color: $primary-color;
+      }
+    }
+    
+    .lesson-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: $primary-color;
+      color: white;
+      border-radius: 50%;
+      font-weight: bold;
+      margin-right: $spacing-md;
+    }
+    
+    .lesson-nav-content {
+      flex: 1;
+      
+      h3 {
+        margin: 0 0 $spacing-xs 0;
+        color: $text-color-primary;
+        font-size: 1.1rem;
+      }
+      
+      p {
+        margin: 0;
+        color: $text-color-secondary;
+        font-size: 0.9rem;
+      }
+    }
+    
+    .completion-status {
+      font-size: 1.5rem;
+      color: #2ecc71;
+      margin-left: $spacing-md;
+    }
+  }
+}
+
+.lesson-content {
+  background-color: $background-white;
+  border-radius: $border-radius-md;
+  box-shadow: $shadow-md;
+  overflow: hidden;
+  
+  .lesson-header {
+    padding: $spacing-lg;
+    border-bottom: 1px solid #f0f0f0;
+    
+    h2 {
+      margin: 0 0 $spacing-md 0;
+      color: $text-color-primary;
+      font-size: $font-size-large;
+    }
+    
+    .tabs {
+      display: flex;
+      gap: $spacing-sm;
+      
+      .tab-button {
+        padding: $spacing-sm $spacing-md;
+        background-color: transparent;
+        border: none;
+        border-radius: $border-radius-sm;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        
+        &:hover {
+          background-color: #f0f0f0;
+        }
+        
+        &.active {
+          background-color: $primary-color;
+          color: white;
+        }
+      }
+    }
+  }
+  
+  .tab-content {
+    padding: $spacing-lg;
+    
+    h3 {
+      margin-top: 0;
+      margin-bottom: $spacing-md;
+      color: $text-color-primary;
+      font-size: $font-size-medium;
+    }
+  }
+}
+
+// Tab tổng quan
+.overview-tab {
+  .lesson-description {
+    margin-bottom: $spacing-lg;
+    
+    p {
+      line-height: 1.6;
+      color: $text-color-tertiary;
+    }
+  }
+  
+  .lesson-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-md;
+    margin-bottom: $spacing-lg;
+    
+    .summary-item {
+      flex: 1;
+      min-width: 150px;
+      padding: $spacing-md;
+      background-color: $background-light;
+      border-radius: $border-radius-md;
+      
+      h4 {
+        margin: 0 0 $spacing-xs 0;
+        color: $primary-color;
+      }
+      
+      p {
+        margin: 0;
+        font-weight: 500;
+        color: $text-color-primary;
+      }
+    }
+  }
+  
+  .lesson-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: $spacing-xl;
+    
+    .complete-button {
+      padding: $spacing-md $spacing-xl;
+      background-color: $primary-color;
+      color: white;
+      border: none;
+      border-radius: $border-radius-lg;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      
+      &:hover:not(:disabled) {
+        background-color: $primary-color-dark;
+        transform: translateY(-2px);
+      }
+      
+      &:disabled {
+        background-color: #bdc3c7;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+// Tab từ vựng
+.vocabulary-tab {
+  .vocabulary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-lg;
+    
+    .mark-learned-button {
+      padding: $spacing-sm $spacing-md;
+      background-color: $secondary-color;
+      color: white;
+      border: none;
+      border-radius: $border-radius-sm;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        background-color: color.adjust($secondary-color, $lightness: -10%);
+      }
+    }
+  }
+  
+  .vocabulary-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: $spacing-md;
+    
+    .vocabulary-card {
+      background-color: $background-light;
+      border-radius: $border-radius-md;
+      padding: $spacing-md;
+      box-shadow: $shadow-sm;
+      
+      .vocabulary-word {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: $spacing-sm;
+        
+        h4 {
+          margin: 0;
+          color: $primary-color;
+          font-size: 1.1rem;
+        }
+        
+        .pronunciation {
+          color: $text-color-secondary;
+          font-style: italic;
+          font-size: 0.9rem;
+        }
+      }
+      
+      .vocabulary-meaning {
+        font-weight: 500;
+        color: $text-color-primary;
+        margin-bottom: $spacing-sm;
+      }
+      
+      .vocabulary-example {
+        color: $text-color-tertiary;
+        font-style: italic;
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
+
+// Tab mẫu câu
+.phrases-tab {
+  .phrases-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-lg;
+    
+    .mark-learned-button {
+      padding: $spacing-sm $spacing-md;
+      background-color: $secondary-color;
+      color: white;
+      border: none;
+      border-radius: $border-radius-sm;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        background-color: color.adjust($secondary-color, $lightness: -10%);
+      }
+    }
+  }
+  
+  .phrases-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $spacing-md;
+    
+    .phrase-card {
+      background-color: $background-light;
+      border-radius: $border-radius-md;
+      padding: $spacing-md;
+      box-shadow: $shadow-sm;
+      
+      .phrase-content {
+        h4 {
+          margin: 0 0 $spacing-sm 0;
+          color: $primary-color;
+          font-size: 1.1rem;
+        }
+        
+        .phrase-meaning {
+          font-weight: 500;
+          color: $text-color-primary;
+          margin-bottom: $spacing-sm;
+        }
+        
+        .phrase-usage {
+          color: $text-color-tertiary;
+          font-size: 0.9rem;
+          
+          strong {
+            color: $text-color-primary;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Tab hoạt động
+.activities-tab {
+  .activities-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $spacing-md;
+    
+    .activity-card {
+      background-color: $background-light;
+      border-radius: $border-radius-md;
+      padding: $spacing-md;
+      box-shadow: $shadow-sm;
+      
+      .activity-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: $spacing-sm;
+        
+        .activity-type {
+          padding: $spacing-xs $spacing-sm;
+          border-radius: $border-radius-sm;
+          margin-right: $spacing-md;
+          font-size: 0.8rem;
+          font-weight: 600;
+          text-transform: uppercase;
+          
+          &.listening {
+            background-color: #3498db;
+            color: white;
+          }
+          
+          &.speaking {
+            background-color: #e74c3c;
+            color: white;
+          }
+          
+          &.writing {
+            background-color: #2ecc71;
+            color: white;
+          }
+          
+          &.reading {
+            background-color: #f39c12;
+            color: white;
+          }
+        }
+        
+        h4 {
+          margin: 0;
+          color: $text-color-primary;
+          font-size: 1.1rem;
+        }
+      }
+      
+      .activity-description {
+        color: $text-color-tertiary;
+        line-height: 1.5;
+        margin-bottom: $spacing-md;
+      }
+      
+      .activity-actions {
+        display: flex;
+        justify-content: flex-end;
+        
+        .complete-activity-button {
+          padding: $spacing-xs $spacing-md;
+          background-color: $primary-color;
+          color: white;
+          border: none;
+          border-radius: $border-radius-sm;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          
+          &:hover:not(:disabled) {
+            background-color: $primary-color-dark;
+          }
+          
+          &:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive styles
+@media (max-width: $breakpoint-md) {
+  .tabs {
+    flex-wrap: wrap;
+  }
+  
+  .summary-item, .vocabulary-card {
+    min-width: 100% !important;
+  }
+}

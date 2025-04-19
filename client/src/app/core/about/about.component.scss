@@ -1,0 +1,139 @@
+@use '../../../styles/variables' as *;
+
+.about-container {
+  max-width: $container-max-width;
+  margin: 0 auto;
+  padding: $spacing-xl;
+  font-family: $font-family-base;
+}
+
+.about-header {
+  text-align: center;
+  margin-bottom: $spacing-xxl;
+  
+  h1 {
+    color: $text-color-primary;
+    font-size: $font-size-xlarge;
+    margin-bottom: $spacing-xs;
+  }
+  
+  .app-version {
+    color: $text-color-secondary;
+    font-size: 0.9rem;
+  }
+}
+
+.about-content {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+  
+  h2 {
+    color: $text-color-primary;
+    font-size: $font-size-large;
+    margin-bottom: $spacing-lg;
+  }
+  
+  p {
+    color: $text-color-tertiary;
+    line-height: 1.6;
+    margin-bottom: $spacing-md;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.about-card {
+  background-color: $background-white;
+  border-radius: $border-radius-md;
+  box-shadow: $shadow-md;
+  padding: $spacing-lg;
+}
+
+.features {
+  margin-top: $spacing-lg;
+  
+  .feature-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: $spacing-lg;
+    
+    .feature-card {
+      background-color: $background-white;
+      border-radius: $border-radius-md;
+      box-shadow: $shadow-sm;
+      padding: $spacing-lg;
+      transition: transform 0.3s ease;
+      
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: $shadow-md;
+      }
+      
+      h3 {
+        color: $primary-color;
+        font-size: $font-size-medium;
+        margin-bottom: $spacing-sm;
+      }
+      
+      p {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.about-target {
+  background-color: $background-white;
+  border-radius: $border-radius-md;
+  box-shadow: $shadow-md;
+  padding: $spacing-lg;
+  
+  ul {
+    list-style-position: inside;
+    padding-left: $spacing-md;
+    
+    li {
+      color: $text-color-tertiary;
+      margin-bottom: $spacing-sm;
+      position: relative;
+      
+      &::before {
+        content: '•';
+        color: $primary-color;
+        font-weight: bold;
+        display: inline-block;
+        width: 1em;
+        margin-left: -1em;
+      }
+    }
+  }
+}
+
+.contact-info {
+  background-color: $background-white;
+  border-radius: $border-radius-md;
+  box-shadow: $shadow-md;
+  padding: $spacing-lg;
+  
+  p {
+    margin-bottom: $spacing-sm;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+// Responsive styles
+@media (max-width: $breakpoint-md) {
+  .about-container {
+    padding: $spacing-lg;
+  }
+  
+  .feature-cards {
+    grid-template-columns: 1fr !important;
+  }
+}

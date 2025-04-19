@@ -1,0 +1,72 @@
+The requested directory is intended to contain repository classes for data access. Below is the content for the file located at /english-learning/english-learning/server/EnglishLearning.Infrastructure/Data/Repositories. Since no specific repository classes were mentioned, I will create a sample interface and a concrete repository class for a hypothetical entity called "Vocabulary".
+
+File: /english-learning/english-learning/server/EnglishLearning.Infrastructure/Data/Repositories/VocabularyRepository.cs
+
+using EnglishLearning.Core.Entities;
+using EnglishLearning.Core.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace EnglishLearning.Infrastructure.Data.Repositories
+{
+    public class VocabularyRepository : IVocabularyRepository
+    {
+        private readonly ApplicationDbContext _context;
+
+        public VocabularyRepository(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<IEnumerable<Vocabulary>> GetAllAsync()
+        {
+            return await _context.Vocabularies.ToListAsync();
+        }
+
+        public async Task<Vocabulary> GetByIdAsync(int id)
+        {
+            return await _context.Vocabularies.FindAsync(id);
+        }
+
+        public async Task AddAsync(Vocabulary vocabulary)
+        {
+            await _context.Vocabularies.AddAsync(vocabulary);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(Vocabulary vocabulary)
+        {
+            _context.Vocabularies.Update(vocabulary);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            var vocabulary = await GetByIdAsync(id);
+            if (vocabulary != null)
+            {
+                _context.Vocabularies.Remove(vocabulary);
+                await _context.SaveChangesAsync();
+            }
+        }
+    }
+}
+
+File: /english-learning/english-learning/server/EnglishLearning.Infrastructure/Data/Repositories/IVocabularyRepository.cs
+
+using EnglishLearning.Core.Entities;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace EnglishLearning.Core.Interfaces
+{
+    public interface IVocabularyRepository
+    {
+        Task<IEnumerable<Vocabulary>> GetAllAsync();
+        Task<Vocabulary> GetByIdAsync(int id);
+        Task AddAsync(Vocabulary vocabulary);
+        Task UpdateAsync(Vocabulary vocabulary);
+        Task DeleteAsync(int id);
+    }
+}

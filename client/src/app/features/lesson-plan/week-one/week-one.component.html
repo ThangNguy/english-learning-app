@@ -1,0 +1,158 @@
+<div class="week-container" *ngIf="weekData">
+  <header class="week-header">
+    <h1>{{ weekData.title }}</h1>
+    <p class="week-description">{{ weekData.description }}</p>
+  </header>
+
+  <div class="lesson-navigation">
+    <div 
+      *ngFor="let lesson of weekData.lessons" 
+      class="lesson-nav-item" 
+      [class.active]="currentLesson?.id === lesson.id"
+      (click)="selectLesson(lesson)">
+      <span class="lesson-number">{{ lesson.id }}</span>
+      <div class="lesson-nav-content">
+        <h3>{{ lesson.title }}</h3>
+        <p>{{ lesson.description }}</p>
+      </div>
+      <span class="completion-status" *ngIf="lesson.completed">✓</span>
+    </div>
+  </div>
+
+  <div class="lesson-content" *ngIf="currentLesson">
+    <div class="lesson-header">
+      <h2>{{ currentLesson.title }}</h2>
+      <div class="tabs">
+        <button 
+          class="tab-button" 
+          [class.active]="activeTab === 'overview'" 
+          (click)="setActiveTab('overview')">
+          Tổng quan
+        </button>
+        <button 
+          class="tab-button" 
+          [class.active]="activeTab === 'vocabulary'" 
+          (click)="setActiveTab('vocabulary')">
+          Từ vựng
+        </button>
+        <button 
+          class="tab-button" 
+          [class.active]="activeTab === 'phrases'" 
+          (click)="setActiveTab('phrases')">
+          Mẫu câu
+        </button>
+        <button 
+          class="tab-button" 
+          [class.active]="activeTab === 'activities'" 
+          (click)="setActiveTab('activities')">
+          Hoạt động
+        </button>
+      </div>
+    </div>
+
+    <div class="tab-content">
+      <!-- Tab tổng quan -->
+      <div class="overview-tab" *ngIf="activeTab === 'overview'">
+        <div class="lesson-description">
+          <h3>Mô tả</h3>
+          <p>{{ currentLesson.description }}</p>
+        </div>
+        
+        <div class="lesson-summary">
+          <div class="summary-item">
+            <h4>Từ vựng</h4>
+            <p>{{ currentLesson.vocabulary.length || 0 }} từ mới</p>
+          </div>
+          <div class="summary-item">
+            <h4>Mẫu câu</h4>
+            <p>{{ currentLesson.phrases.length || 0 }} mẫu câu</p>
+          </div>
+          <div class="summary-item">
+            <h4>Hoạt động</h4>
+            <p>{{ currentLesson.activities.length || 0 }} hoạt động</p>
+          </div>
+        </div>
+        
+        <div class="lesson-actions">
+          <button class="complete-button" (click)="completeLesson()" [disabled]="currentLesson.completed">
+            {{ currentLesson.completed ? 'Đã hoàn thành' : 'Đánh dấu đã hoàn thành' }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Tab từ vựng -->
+      <div class="vocabulary-tab" *ngIf="activeTab === 'vocabulary'">
+        <div class="vocabulary-header">
+          <h3>Từ vựng mới ({{ currentLesson.vocabulary.length || 0 }})</h3>
+          <button class="mark-learned-button" (click)="learnVocabulary()">
+            Đánh dấu đã học tất cả
+          </button>
+        </div>
+        
+        <div class="vocabulary-list">
+          <div class="vocabulary-card" *ngFor="let word of currentLesson.vocabulary">
+            <div class="vocabulary-word">
+              <h4>{{ word.word }}</h4>
+              <span class="pronunciation" *ngIf="word.pronunciation">{{ word.pronunciation }}</span>
+            </div>
+            <div class="vocabulary-meaning">{{ word.meaning }}</div>
+            <div class="vocabulary-example">{{ word.example }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab mẫu câu -->
+      <div class="phrases-tab" *ngIf="activeTab === 'phrases'">
+        <div class="phrases-header">
+          <h3>Mẫu câu thông dụng ({{ currentLesson.phrases.length || 0 }})</h3>
+          <button class="mark-learned-button" (click)="learnPhrases()">
+            Đánh dấu đã học tất cả
+          </button>
+        </div>
+        
+        <div class="phrases-list">
+          <div class="phrase-card" *ngFor="let phrase of currentLesson.phrases">
+            <div class="phrase-content">
+              <h4>{{ phrase.phrase }}</h4>
+              <div class="phrase-meaning">{{ phrase.meaning }}</div>
+              <div class="phrase-usage">
+                <strong>Cách dùng:</strong> {{ phrase.usage }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab hoạt động -->
+      <div class="activities-tab" *ngIf="activeTab === 'activities'">
+        <h3>Hoạt động thực hành</h3>
+        
+        <div class="activities-list">
+          <div class="activity-card" *ngFor="let activity of currentLesson.activities">
+            <div class="activity-header">
+              <div class="activity-type" [ngClass]="activity.type">
+                {{ activity.type === 'listening' ? 'Nghe' : 
+                   activity.type === 'speaking' ? 'Nói' : 
+                   activity.type === 'writing' ? 'Viết' : 'Đọc' }}
+              </div>
+              <h4>{{ activity.title }}</h4>
+            </div>
+            
+            <div class="activity-description">
+              {{ activity.description }}
+            </div>
+            
+            <div class="activity-actions">
+              <button 
+                class="complete-activity-button" 
+                (click)="completeActivity(activity.id)" 
+                [disabled]="activity.completed">
+                {{ activity.completed ? 'Đã hoàn thành' : 'Đánh dấu đã hoàn thành' }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
