@@ -1,0 +1,80 @@
+<div class="progress-container">
+  <h1 class="section-title">Learning Progress</h1>
+  <p class="section-description">Track your family's English learning journey</p>
+  
+  <div class="chart-section">
+    <div class="chart-header">
+      <h2 class="chart-title">Weekly Activity</h2>
+      <mat-form-field appearance="outline" class="time-filter">
+        <mat-label>Time Period</mat-label>
+        <mat-select [value]="selectedTimePeriod()" (valueChange)="updateTimePeriod($event)">
+          <mat-option value="week">This Week</mat-option>
+          <mat-option value="month">This Month</mat-option>
+          <mat-option value="year">This Year</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    
+    <div class="chart-container">
+      <!-- Biểu đồ đơn giản - trong ứng dụng thực tế, bạn có thể sử dụng thư viện như Chart.js hoặc ngx-charts -->
+      <div class="placeholder-chart">
+        <div *ngFor="let entry of activityData()" class="chart-bar" 
+             [style.height]="entry.value + '%'" 
+             [style.backgroundColor]="entry.color">
+          <span class="bar-label">{{entry.value}}%</span>
+          <span class="bar-day">{{entry.label}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="family-stats">
+    <h2 class="stats-title">Family Leaderboard</h2>
+    
+    <div class="member-list">
+      <div *ngFor="let member of familyMembers(); let i = index" class="member-card" [class.first-place]="i === 0">
+        <div class="member-rank">{{i + 1}}</div>
+        <div class="member-avatar" [style.backgroundColor]="member.color">
+          <img *ngIf="member.avatarUrl" [src]="member.avatarUrl" [alt]="member.name">
+          <mat-icon *ngIf="!member.avatarUrl">person</mat-icon>
+          <div *ngIf="i === 0" class="crown-icon">👑</div>
+        </div>
+        <div class="member-info">
+          <h3 class="member-name">{{member.name}}</h3>
+          <span class="member-role">{{member.role}}</span>
+        </div>
+        <div class="member-stats">
+          <div class="stat-item">
+            <span class="stat-value">{{member.points}}</span>
+            <span class="stat-label">Points</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">{{member.completedTopics}}</span>
+            <span class="stat-label">Topics</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">{{member.streak}}</span>
+            <span class="stat-label">Day Streak</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="achievements-section">
+    <h2 class="achievements-title">Recent Achievements</h2>
+    
+    <div class="achievements-list">
+      <div *ngFor="let achievement of recentAchievements()" class="achievement-card">
+        <div class="achievement-icon" [style.backgroundColor]="achievement.color">
+          <mat-icon>{{achievement.icon}}</mat-icon>
+        </div>
+        <div class="achievement-content">
+          <h3 class="achievement-title">{{achievement.title}}</h3>
+          <p class="achievement-description">{{achievement.description}}</p>
+          <p class="achievement-date">{{achievement.date | date:'medium'}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

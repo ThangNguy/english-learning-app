@@ -1,0 +1,135 @@
+.register-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #5C6BC0 0%, #3F51B5 100%);
+  background-size: cover;
+  overflow: auto;
+  padding: 20px;
+}
+
+.register-card {
+  width: 100%;
+  max-width: 600px;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  position: relative;
+}
+
+.register-header {
+  padding: 25px 20px;
+  text-align: center;
+  background-color: var(--primary-color);
+  color: white;
+  
+  .logo {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid white;
+    margin-bottom: 10px;
+  }
+  
+  h1 {
+    font-size: 22px;
+    margin: 0 0 5px 0;
+    font-weight: 700;
+  }
+  
+  p {
+    margin: 0;
+    font-size: 14px;
+    opacity: 0.9;
+  }
+}
+
+.register-form {
+  padding: 25px;
+  
+  .form-row {
+    display: flex;
+    gap: 15px;
+    
+    .form-field {
+      flex: 1;
+    }
+  }
+  
+  .form-field {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .terms-checkbox {
+    margin: 15px 0;
+    
+    .terms-link {
+      color: var(--primary-color);
+      text-decoration: none;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    
+    .terms-error {
+      display: block;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+  }
+  
+  .register-button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    
+    .spinner {
+      margin-right: 8px;
+    }
+  }
+  
+  .login-link {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 15px;
+    
+    a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 600;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.register-footer {
+  text-align: center;
+  padding: 10px 20px 20px;
+  
+  .characters-image {
+    max-width: 90%;
+    height: auto;
+    margin: 0 auto;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+}

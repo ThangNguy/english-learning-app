@@ -1,0 +1,170 @@
+<div class="game-container">
+  <!-- Màn hình bắt đầu trò chơi -->
+  <div class="start-screen" *ngIf="!isGameStarted() && !isGameOver()">
+    <div class="game-card">
+      <div class="game-card-header" [style.backgroundColor]="'var(--primary-color)'">
+        <h1 class="game-title">Word Match</h1>
+        <p class="game-subtitle">Match English words with their pictures</p>
+      </div>
+      
+      <div class="game-card-content">
+        <div class="level-info" *ngIf="gameLevel()">
+          <div class="level-badge">{{ gameLevel()?.name }}</div>
+          <div class="level-details">
+            <div class="level-detail">
+              <mat-icon>timer</mat-icon>
+              <span>{{ gameLevel()?.timeLimit }} seconds</span>
+            </div>
+            <div class="level-detail">
+              <mat-icon>list</mat-icon>
+              <span>{{ gameLevel()?.wordCount }} words</span>
+            </div>
+            <div class="level-detail">
+              <mat-icon>school</mat-icon>
+              <span>{{ gameLevel()?.difficulty }}</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="game-instructions">
+          <h2>How to Play</h2>
+          <ol>
+            <li>Drag the words on the left to their matching pictures on the right.</li>
+            <li>Each correct match gives you 10 points.</li>
+            <li>Each wrong match deducts 5 points.</li>
+            <li>Match all words before the time runs out!</li>
+          </ol>
+        </div>
+        
+        <button mat-raised-button color="primary" class="start-button" (click)="startGame()">
+          <mat-icon>play_arrow</mat-icon> Start Game
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Màn hình chơi game -->
+  <div class="gameplay-screen" *ngIf="isGameStarted() && !isGameOver()">
+    <div class="game-header">
+      <div class="game-info">
+        <h1 class="game-title">Word Match</h1>
+        <div class="level-badge small">{{ gameLevel()?.name }}</div>
+      </div>
+      
+      <div class="game-stats">
+        <div class="stat-item">
+          <mat-icon>timer</mat-icon>
+          <span class="time-left">{{ timeLeft() }}</span>
+        </div>
+        <div class="stat-item">
+          <mat-icon>emoji_events</mat-icon>
+          <span class="score">{{ score() }}</span>
+        </div>
+        <div class="stat-item">
+          <mat-icon>check_circle</mat-icon>
+          <span class="matched">{{ matchedCount() }}/{{ totalWords() }}</span>
+        </div>
+      </div>
+      
+      <button mat-icon-button color="warn" class="exit-button" (click)="exitGame()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    
+    <mat-progress-bar [value]="(timeLeft() / maxTime()) * 100" color="accent"></mat-progress-bar>
+    
+    <div class="game-content">
+      <div class="word-container">
+        <h2 class="section-title">Words</h2>
+        <div cdkDropList
+             [cdkDropListData]="wordList()"
+             (cdkDropListDropped)="onWordDropped($event)"
+             [cdkDropListConnectedTo]="['image-list']"
+             class="word-list">
+          <div class="word-item" *ngFor="let word of wordList()" cdkDrag>
+            <div class="word-card">
+              <span class="word-text">{{ word.text }}</span>
+              <button mat-icon-button class="audio-button" (click)="playWordAudio(word.id)" cdkDragDisabled>
+                <mat-icon>volume_up</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="image-container">
+        <h2 class="section-title">Pictures</h2>
+        <div cdkDropList
+             [cdkDropListData]="imageList()"
+             (cdkDropListDropped)="onWordDropped($event)"
+             [cdkDropListConnectedTo]="['word-list']"
+             class="image-list"
+             id="image-list">
+          <div class="image-item" *ngFor="let image of imageList()" cdkDrag>
+            <img [src]="image.imageUrl" [alt]="'Image ' + image.id" class="image">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Màn hình kết thúc trò chơi -->
+  <div class="end-screen" *ngIf="isGameOver()">
+    <div class="game-card">
+      <div class="game-card-header" [style.backgroundColor]="matchedCount() === totalWords() ? 'var(--success-color)' : 'var(--error-color)'">
+        <h1 class="game-title">{{ matchedCount() === totalWords() ? 'Congratulations!' : 'Game Over' }}</h1>
+        <p class="game-subtitle">{{ matchedCount() === totalWords() ? 'You matched all words successfully!' : 'Time\'s up!' }}</p>
+      </div>
+      
+      <div class="game-card-content">
+        <div class="result-stats">
+          <div class="result-stat">
+            <div class="stat-icon success">
+              <mat-icon>emoji_events</mat-icon>
+            </div>
+            <div class="stat-details">
+              <span class="stat-value">{{ score() }}</span>
+              <span class="stat-label">Total Score</span>
+            </div>
+          </div>
+          
+          <div class="result-stat">
+            <div class="stat-icon info">
+              <mat-icon>check_circle</mat-icon>
+            </div>
+            <div class="stat-details">
+              <span class="stat-value">{{ matchedCount() }}/{{ totalWords() }}</span>
+              <span class="stat-label">Words Matched</span>
+            </div>
+          </div>
+          
+          <div class="result-stat">
+            <div class="stat-icon warning">
+              <mat-icon>timer</mat-icon>
+            </div>
+            <div class="stat-details">
+              <span class="stat-value">{{ maxTime() - timeLeft() }}</span>
+              <span class="stat-label">Seconds Used</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="action-buttons">
+          <button mat-raised-button color="primary" class="action-button" (click)="restartGame()">
+            <mat-icon>replay</mat-icon> Play Again
+          </button>
+          
+          <button mat-raised-button color="accent" class="action-button" 
+                 *ngIf="matchedCount() === totalWords()"
+                 (click)="goToNextLevel()">
+            <mat-icon>arrow_forward</mat-icon> Next Level
+          </button>
+          
+          <button mat-raised-button color="basic" class="action-button" (click)="exitGame()">
+            <mat-icon>home</mat-icon> Back to Games
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

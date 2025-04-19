@@ -1,0 +1,125 @@
+<div class="topic-detail-container" *ngIf="topic()">
+  <div class="topic-header" [style.backgroundColor]="topic().color">
+    <button mat-icon-button class="back-button" [routerLink]="['/topics']">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    
+    <div class="topic-info">
+      <div class="topic-icon">
+        <img [src]="topic().iconUrl" [alt]="topic().name">
+      </div>
+      <div class="topic-text">
+        <h1 class="topic-title">{{ topic().name }}</h1>
+        <p class="topic-description">{{ topic().description }}</p>
+        
+        <div class="topic-stats">
+          <div class="stat">
+            <mat-icon>list</mat-icon>
+            <span>{{ topic().wordCount }} words</span>
+          </div>
+          <div class="stat">
+            <mat-icon>school</mat-icon>
+            <span>{{ topic().difficultyLevel }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="progress-section">
+      <div class="progress-info">
+        <span class="progress-label">Overall Progress</span>
+        <span class="progress-value">{{ progress() }}%</span>
+      </div>
+      <mat-progress-bar mode="determinate" [value]="progress()" color="accent"></mat-progress-bar>
+    </div>
+  </div>
+  
+  <div class="content-wrapper">
+    <div class="lessons-sidebar">
+      <h2 class="sidebar-title">Lessons</h2>
+      
+      <div class="lesson-list">
+        <div *ngFor="let lesson of lessons()" 
+             class="lesson-item" 
+             [class.active]="lesson.id === activeLesson()?.id"
+             [class.completed]="lesson.completed"
+             (click)="selectLesson(lesson)">
+          <div class="lesson-progress">
+            <div class="progress-circle" [style.background]="lesson.completed ? 'var(--success-color)' : 'var(--primary-color)'">
+              <mat-icon *ngIf="lesson.completed">check</mat-icon>
+              <span *ngIf="!lesson.completed">{{ lesson.progress }}%</span>
+            </div>
+            <div class="progress-line" *ngIf="!lesson.completed && lesson.progress > 0"></div>
+          </div>
+          
+          <div class="lesson-content">
+            <h3 class="lesson-title">{{ lesson.title }}</h3>
+            <p class="lesson-description">{{ lesson.description }}</p>
+            <div class="lesson-stats">
+              <span>{{ lesson.words.length }} words</span>
+              <span *ngIf="lesson.completed" class="completed-text">Completed</span>
+              <span *ngIf="!lesson.completed && lesson.progress > 0" class="in-progress-text">In Progress</span>
+              <span *ngIf="!lesson.completed && lesson.progress === 0" class="not-started-text">Not Started</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="lesson-detail" *ngIf="activeLesson()">
+      <div class="lesson-header">
+        <div class="lesson-navigation">
+          <button mat-icon-button [disabled]="activeLesson()?.id === lessons()[0]?.id" (click)="goToPreviousLesson()">
+            <mat-icon>navigate_before</mat-icon>
+          </button>
+          <h2 class="active-lesson-title">{{ activeLesson()?.title }}</h2>
+          <button mat-icon-button [disabled]="activeLesson()?.id === lessons()[lessons().length - 1]?.id" (click)="goToNextLesson()">
+            <mat-icon>navigate_next</mat-icon>
+          </button>
+        </div>
+        
+        <button mat-raised-button color="primary" class="quiz-button" (click)="startQuiz()">
+          <mat-icon>quiz</mat-icon>
+          Start Quiz
+        </button>
+      </div>
+      
+      <mat-divider></mat-divider>
+      
+      <div class="words-grid">
+        <mat-card *ngFor="let word of activeLesson()?.words" class="word-card" [class.learned]="word.learned">
+          <div class="word-image-container">
+            <img [src]="word.imageUrl" [alt]="word.english" class="word-image">
+            <button mat-mini-fab class="audio-button" (click)="playAudio(word.audioUrl)">
+              <mat-icon>volume_up</mat-icon>
+            </button>
+          </div>
+          
+          <mat-card-content>
+            <div class="word-header">
+              <h3 class="word-text">{{ word.english }}</h3>
+              <button *ngIf="!word.learned" mat-icon-button color="primary" (click)="markAsLearned(word)" class="mark-learned-button">
+                <mat-icon>check_circle_outline</mat-icon>
+              </button>
+              <mat-icon *ngIf="word.learned" class="learned-icon">check_circle</mat-icon>
+            </div>
+            
+            <p class="word-translation">{{ word.vietnamese }}</p>
+            
+            <mat-divider></mat-divider>
+            
+            <div class="word-example">
+              <mat-icon class="example-icon">format_quote</mat-icon>
+              <p class="example-text">{{ word.example }}</p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="loading-state" *ngIf="!topic()">
+  <mat-spinner></mat-spinner>
+  <p>Loading topic data...</p>
+</div>

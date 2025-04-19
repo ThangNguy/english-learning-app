@@ -1,0 +1,29 @@
+<div class="topics-container">
+  <h1 class="section-title">Learning Topics</h1>
+  <p class="section-description">Choose a topic to start learning English vocabulary and phrases</p>
+  
+  <div class="topics-grid">
+    <div *ngFor="let topic of topics()" class="topic-card" [style.backgroundColor]="topic.color">
+      <div class="topic-icon">
+        <img [src]="topic.iconUrl" [alt]="topic.name">
+      </div>
+      <div class="topic-content">
+        <h2 class="topic-title">{{ topic.name }}</h2>
+        <p class="topic-description">{{ topic.description }}</p>
+        <div class="topic-stats">
+          <div class="stat">
+            <mat-icon>list</mat-icon>
+            <span>{{ topic.wordCount }} words</span>
+          </div>
+          <div class="stat">
+            <mat-icon>school</mat-icon>
+            <span>{{ topic.difficultyLevel }}</span>
+          </div>
+        </div>
+      </div>
+      <button mat-raised-button class="start-button" (click)="startTopic(topic)">
+        Start Learning
+      </button>
+    </div>
+  </div>
+</div>
